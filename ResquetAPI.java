@@ -12,11 +12,9 @@ public class ResquetAPI {
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            int responseCode = connection.getResponseCode();
+            int responseStatus = connection.getResponseCode();
 
-            System.out.println(responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseStatus == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 
                 String inputLIne;
