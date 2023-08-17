@@ -4,7 +4,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ResquetAPI {
-    public void request(String urlAPI, String method) {
+    int requestStatus;
+
+    public String request(String urlAPI, String method) {
+        String data = "";
+
         try {
             String urlString = urlAPI;
 
@@ -16,7 +20,7 @@ public class ResquetAPI {
 
             int responseStatus = connection.getResponseCode();
 
-            System.out.println(responseStatus);
+            requestStatus = responseStatus;
 
             if (responseStatus == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -26,17 +30,20 @@ public class ResquetAPI {
                 StringBuilder response = new StringBuilder();
 
                 while ((inputLIne = in.readLine()) != null) {
-                    response.append(inputLIne);
+                    response.append(inputLIne).append("\n");
                 }
 
                 in.close();
 
                 System.out.println("Res:" + response.toString());
+                data = response.toString();
             } else {
-                System.err.println("Error");
+                data = "error";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return data;
     }
 }
